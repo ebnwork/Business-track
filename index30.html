@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BizTrack OS | Enterprise Business & SME Management Platform</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        biz: {
+                            dark: '#0B0F19',
+                            card: '#131B2E',
+                            border: '#1E293B',
+                            primary: '#00DC82',
+                            primaryHover: '#00BA6E',
+                            accent: '#38BDF8',
+                            whatsapp: '#25D366',
+                            muted: '#94A3B8'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts & Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #0B0F19; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #00DC82; }
+    </style>
+</head>
+<body class="bg-biz-dark text-slate-100 antialiased min-h-screen flex flex-col justify-between selection:bg-biz-primary selection:text-biz-dark">
+
+    <!-- TOP ANNOUNCEMENT BAR -->
+    <div class="bg-biz-primary text-biz-dark py-2 px-4 text-center font-bold text-xs md:text-sm flex items-center justify-center gap-2">
+        <span class="bg-biz-dark text-biz-primary text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider">New Feature</span>
+        <span>BizTrack Enterprise OS • One-Click WhatsApp Daily Owner Reports Active.</span>
+    </div>
+
+    <!-- NAVIGATION BAR -->
+    <nav class="sticky top-0 z-40 bg-biz-dark/90 backdrop-blur-md border-b border-biz-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-biz-primary text-biz-dark font-black text-xl flex items-center justify-center shadow-lg shadow-biz-primary/20">
+                    BT
+                </div>
+                <div>
+                    <span class="text-xl font-black tracking-tight text-white block leading-none">BIZTRACK<span class="text-biz-primary">OS</span></span>
+                    <span class="text-[10px] text-biz-accent tracking-widest font-mono uppercase">Eldoret Business Network (EBN)</span>
+                </div>
+            </div>
+
+            <!-- App Tabs -->
+            <div class="hidden md:flex items-center space-x-1 bg-biz-card p-1.5 rounded-xl border border-biz-border text-xs font-semibold">
+                <button onclick="switchTab('dashboard')" id="nav-dashboard" class="px-3.5 py-2 rounded-lg bg-biz-primary text-biz-dark transition">Command Center</button>
+                <button onclick="switchTab('pos')" id="nav-pos" class="px-3.5 py-2 rounded-lg text-biz-muted hover:text-white transition">POS Terminal</button>
+                <button onclick="switchTab('inventory')" id="nav-inventory" class="px-3.5 py-2 rounded-lg text-biz-muted hover:text-white transition">Inventory Stock</button>
+                <button onclick="switchTab('staff')" id="nav-staff" class="px-3.5 py-2 rounded-lg text-biz-muted hover:text-white transition">Staff Attendance</button>
+                <button onclick="switchTab('billing')" id="nav-billing" class="px-3.5 py-2 rounded-lg text-biz-muted hover:text-white transition">Platform Income (SaaS)</button>
+                <button onclick="switchTab('reports')" id="nav-reports" class="px-3.5 py-2 rounded-lg text-biz-muted hover:text-white transition">Store Ledger</button>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <div class="text-right hidden sm:block">
+                    <span class="text-xs font-bold text-white block" id="storeOwnerName">Eldo Hardware Ltd</span>
+                    <span class="text-[10px] text-biz-primary font-mono block">Plan: BizTrack Basic</span>
+                </div>
+                <button onclick="openSettingsModal()" class="w-10 h-10 rounded-xl bg-biz-card border border-biz-border text-biz-muted hover:text-white flex items-center justify-center transition">
+                    <i class="fa-solid fa-gear"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN APP CONTAINER -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- ================= TAB 1: COMMAND CENTER ================= -->
+        <div id="tab-dashboard" class="space-y-8 animate-fade-in">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-biz-card border border-biz-border rounded-2xl p-6 md:p-8">
+                <div>
+                    <span class="text-xs font-mono text-biz-primary uppercase tracking-wider">Owner Overview</span>
+                    <h1 class="text-2xl sm:text-3xl font-black text-white mt-1">Good day, Managing Director</h1>
+                    <p class="text-xs sm:text-sm text-biz-muted mt-1">Here is the real-time health and performance status across your store branches today.</p>
+                </div>
+                <div class="flex flex-wrap items-center gap-3">
+                    <button onclick="switchTab('pos')" class="bg-biz-primary hover:bg-biz-primaryHover text-biz-dark font-bold text-xs px-5 py-3 rounded-xl transition shadow-lg shadow-biz-primary/10 flex items-center gap-2">
+                        <i class="fa-solid fa-cash-register"></i> Open POS Terminal
+                    </button>
+                    <button onclick="sendWhatsAppReport()" class="bg-biz-whatsapp hover:opacity-90 text-white font-bold text-xs px-5 py-3 rounded-xl transition flex items-center gap-2 shadow-lg">
+                        <i class="fa-brands fa-whatsapp text-sm"></i> Send WhatsApp Report
+                    </button>
+                </div>
+            </div>
+
+            <!-- Core Metric Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div class="bg-biz-card border border-biz-border p-6 rounded-2xl">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-xs text-biz-muted font-medium">Total Revenue Today</span>
+                        <div class="w-8 h-8 rounded-lg bg-biz-primary/10 text-biz-primary flex items-center justify-center text-xs font-bold">
+                            <i class="fa-solid fa-arrow-trend-up"></i>
+                        </div>
+                    </div>
+                    <div class="text-2xl sm:text-3xl font-black text-white font-mono" id="dashTotalRevenue">KSh 48,250</div>
+                    <span class="text-[11px] text-biz-primary font-mono mt-2 block">+14.2% vs yesterday</span>
+                </div>
+
+                <div class="bg-biz-card border border-biz-border p-6 rounded-2xl">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-xs text-biz-muted font-medium">Transactions Logged</span>
+                        <div class="w-8 h-8 rounded-lg bg-biz-accent/10 text-biz-accent flex items-center justify-center text-xs font-bold">
+                            <i class="fa-solid fa-receipt"></i>
+                        </div>
+                    </div>
+                    <div class="text-2xl sm:text-3xl font-black text-white font-mono" id="dashTotalTx">18 Orders</div>
+                    <span class="text-[11px] text-biz-accent font-mono mt-2 block">M-Pesa: 14 | Cash: 4</span>
+                </div>
+
+                <div class="bg-biz-card border border-biz-border p-6 rounded-2xl">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-xs text-biz-muted font-medium">Low Stock Warnings</span>
+                        <div class="w-8 h-8 rounded-lg bg-yellow-500/10 text-yellow-400 flex items-center justify-center text-xs font-bold">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                    </div>
+                    <div class="text-2xl sm:text-3xl font-black text-yellow-400 font-mono">3 Items</div>
+                    <span class="text-[11px] text-yellow-400/80 font-mono mt-2 block">Action required soon</span>
+                </div>
+
+                <div class="bg-biz-card border border-biz-border p-6 rounded-2xl">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-xs text-biz-muted font-medium">Platform Subscription</span>
+                        <div class="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center text-xs font-bold">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                    </div>
+                    <div class="text-2xl sm:text-3xl font-black text-white font-mono">Active</div>
+                    <span class="text-[11px] text-purple-400 font-mono mt-2 block">Renews in 24 days</span>
+                </div>
+            </div>
+
+            <!-- Recent Activity Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <div class="lg:col-span-8 bg-biz-card border border-biz-border rounded-2xl p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-base font-bold text-white">Live Store Transactions</h2>
+                        <button onclick="switchTab('reports')" class="text-xs text-biz-accent hover:underline">View Full Ledger &rarr;</button>
+                    </div>
+                    <div id="dashTxList" class="space-y-3"></div>
+                </div>
+
+                <div class="lg:col-span-4 bg-biz-card border border-biz-border rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <h2 class="text-base font-bold text-white mb-4">Stock Alerts</h2>
+                        <div class="space-y-3">
+                            <div class="bg-biz-dark p-3 rounded-xl border border-biz-border flex justify-between items-center">
+                                <div>
+                                    <span class="text-xs font-bold text-white block">Cement Bag 50kg</span>
+                                    <span class="text-[10px] text-yellow-400 font-mono">Remaining: 4 units</span>
+                                </div>
+                                <span class="text-[10px] bg-yellow-400/10 text-yellow-400 px-2 py-1 rounded font-mono">Low</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="switchTab('inventory')" class="mt-6 w-full py-3 bg-biz-dark hover:bg-biz-border text-white font-bold rounded-xl text-xs transition border border-biz-border">
+                        Manage Full Inventory &rarr;
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 2: POS TERMINAL ================= -->
+        <div id="tab-pos" class="hidden space-y-8 animate-fade-in">
+            <div class="flex justify-between items-center bg-biz-card border border-biz-border rounded-2xl p-6">
+                <div>
+                    <h1 class="text-2xl font-black text-white">Point of Sale (POS)</h1>
+                    <p class="text-xs text-biz-muted mt-1">Process customer orders, deduct inventory automatically, and log M-Pesa or cash.</p>
+                </div>
+                <div class="text-right">
+                    <span class="text-xs text-biz-muted block">Active Till Number</span>
+                    <span class="text-sm font-mono font-bold text-biz-primary">882100 (Eldo CBD)</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <div class="lg:col-span-7 bg-biz-card border border-biz-border rounded-2xl p-6">
+                    <h2 class="text-sm font-bold text-white mb-4 uppercase tracking-wider">Select Item to Sell</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="posProductGrid"></div>
+                </div>
+
+                <div class="lg:col-span-5 bg-biz-card border border-biz-border rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <h2 class="text-sm font-bold text-white mb-4 uppercase tracking-wider">Current Cart Order</h2>
+                        <div id="cartItemsList" class="space-y-3 mb-6 max-h-60 overflow-y-auto custom-scrollbar">
+                            <p class="text-xs text-biz-muted italic">Cart is empty. Tap products on the left to add.</p>
+                        </div>
+                    </div>
+
+                    <div class="border-t border-biz-border pt-4 space-y-4">
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-biz-muted">Total Payable:</span>
+                            <span class="text-2xl font-black text-biz-primary font-mono" id="cartTotalDisplay">KSh 0.00</span>
+                        </div>
+                        <div>
+                            <label class="text-xs text-biz-muted block mb-1">Payment Method</label>
+                            <select id="posPaymentMethod" class="w-full bg-biz-dark border border-biz-border text-white rounded-xl p-3 text-xs focus:border-biz-primary focus:outline-none">
+                                <option value="M-Pesa STK Push">M-Pesa Till / STK Push</option>
+                                <option value="Cash">Cash Currency</option>
+                                <option value="Credit / Deni">Credit Account (Deni)</option>
+                            </select>
+                        </div>
+                        <button onclick="completeSale()" class="w-full bg-biz-primary hover:bg-biz-primaryHover text-biz-dark font-black py-4 rounded-xl text-sm transition shadow-lg shadow-biz-primary/20">
+                            Confirm & Process Sale
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 3: INVENTORY STOCK ================= -->
+        <div id="tab-inventory" class="hidden space-y-8 animate-fade-in">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-biz-card border border-biz-border rounded-2xl p-6">
+                <div>
+                    <h1 class="text-2xl font-black text-white">Inventory & Stock Management</h1>
+                    <p class="text-xs text-biz-muted mt-1">Track stock counts, unit prices, and prevent employee theft or shrinkage.</p>
+                </div>
+                <button onclick="openAddProductModal()" class="bg-biz-primary hover:bg-biz-primaryHover text-biz-dark font-bold text-xs px-5 py-3 rounded-xl transition flex items-center gap-2">
+                    <i class="fa-solid fa-plus"></i> Add New Stock Item
+                </button>
+            </div>
+
+            <div class="bg-biz-card border border-biz-border rounded-2xl overflow-hidden shadow-xl">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-biz-dark text-biz-muted uppercase tracking-wider font-mono border-b border-biz-border">
+                            <tr>
+                                <th class="p-4">Item Name</th>
+                                <th class="p-4">Category</th>
+                                <th class="p-4">Unit Price</th>
+                                <th class="p-4">In Stock</th>
+                                <th class="p-4">Status</th>
+                                <th class="p-4 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventoryTableBody" class="divide-y divide-biz-border"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 4: STAFF ATTENDANCE ================= -->
+        <div id="tab-staff" class="hidden space-y-8 animate-fade-in">
+            <div class="flex justify-between items-center bg-biz-card border border-biz-border rounded-2xl p-6">
+                <div>
+                    <h1 class="text-2xl font-black text-white">Staff Attendance & Shifts</h1>
+                    <p class="text-xs text-biz-muted mt-1">Monitor employee clock-in times, location checks, and sales commission performance.</p>
+                </div>
+                <button onclick="simulateClockIn()" class="bg-biz-card hover:bg-biz-border border border-biz-border text-white text-xs font-bold px-4 py-3 rounded-xl transition flex items-center gap-2">
+                    <i class="fa-solid fa-user-clock text-biz-primary"></i> Simulate Staff Clock-In
+                </button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="staffListGrid"></div>
+        </div>
+
+        <!-- ================= TAB 5: PLATFORM INCOME (SAAS BILLING) ================= -->
+        <div id="tab-billing" class="hidden space-y-8 animate-fade-in">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-biz-card border border-biz-border rounded-2xl p-6">
+                <div>
+                    <span class="text-xs font-mono text-biz-primary uppercase tracking-wider">EBN Business Owner Revenue Model</span>
+                    <h1 class="text-2xl font-black text-white mt-1">Platform Subscriptions & SaaS Income</h1>
+                    <p class="text-xs text-biz-muted mt-1">Manage active merchant subscriptions, monthly recurring revenue (MRR), and plan upgrades.</p>
+                </div>
+                <div class="bg-biz-dark px-4 py-3 rounded-xl border border-biz-border text-right">
+                    <span class="text-[10px] text-biz-muted block">Total Platform MRR</span>
+                    <span class="text-lg font-black text-biz-primary font-mono">KSh 42,500 / mo</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-biz-card border border-biz-border p-6 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs text-biz-muted font-mono uppercase">Starter Plan</span>
+                        <h3 class="text-xl font-bold text-white mt-1">EBN Free Tier</h3>
+                        <p class="text-xs text-biz-muted mt-2">Basic directory listing & limited monthly logs.</p>
+                        <div class="my-5">
+                            <span class="text-3xl font-black text-white font-mono">KSh 0</span>
+                            <span class="text-xs text-biz-muted">/ forever</span>
+                        </div>
+                    </div>
+                    <button onclick="showToast('Starter plan is currently active.')" class="w-full py-3 bg-biz-dark text-white border border-biz-border rounded-xl text-xs font-bold">Current Plan</button>
+                </div>
+
+                <div class="bg-biz-card border-2 border-biz-primary p-6 rounded-2xl flex flex-col justify-between relative shadow-xl">
+                    <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-biz-primary text-biz-dark text-[9px] font-black uppercase px-3 py-1 rounded-full">Most Popular</span>
+                    <div>
+                        <span class="text-xs text-biz-primary font-mono uppercase">Growth Plan</span>
+                        <h3 class="text-xl font-bold text-white mt-1">BizTrack Basic</h3>
+                        <p class="text-xs text-biz-muted mt-2">Unlimited sales logging, inventory tracking & M-Pesa sync.</p>
+                        <div class="my-5">
+                            <span class="text-3xl font-black text-biz-primary font-mono">KSh 1,500</span>
+                            <span class="text-xs text-biz-muted">/ month</span>
+                        </div>
+                    </div>
+                    <button onclick="upgradeSubscription('BizTrack Basic (KSh 1,500)')" class="w-full py-3 bg-biz-primary hover:bg-biz-primaryHover text-biz-dark rounded-xl text-xs font-black transition">Upgrade via M-Pesa</button>
+                </div>
+
+                <div class="bg-biz-card border border-biz-border p-6 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs text-biz-accent font-mono uppercase">Enterprise Pro</span>
+                        <h3 class="text-xl font-bold text-white mt-1">BizTrack Pro</h3>
+                        <p class="text-xs text-biz-muted mt-2">Multi-branch store control, theft analytics & WhatsApp PDF reports.</p>
+                        <div class="my-5">
+                            <span class="text-3xl font-black text-white font-mono">KSh 3,500</span>
+                            <span class="text-xs text-biz-muted">/ month</span>
+                        </div>
+                    </div>
+                    <button onclick="upgradeSubscription('BizTrack Pro (KSh 3,500)')" class="w-full py-3 bg-biz-dark hover:bg-biz-border text-white border border-biz-border rounded-xl text-xs font-bold transition">Upgrade to Pro</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 6: LEDGER & REPORTS ================= -->
+        <div id="tab-reports" class="hidden space-y-8 animate-fade-in">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-biz-card border border-biz-border rounded-2xl p-6">
+                <div>
+                    <h1 class="text-2xl font-black text-white">Financial Ledger & Audit Reports</h1>
+                    <p class="text-xs text-biz-muted mt-1">Complete historical log of all cash and M-Pesa payments recorded across your store.</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button onclick="sendWhatsAppReport()" class="bg-biz-whatsapp hover:opacity-90 text-white font-bold text-xs px-4 py-3 rounded-xl transition flex items-center gap-2">
+                        <i class="fa-brands fa-whatsapp"></i> Send WhatsApp Report
+                    </button>
+                    <button onclick="exportDailyReport()" class="bg-biz-primary text-biz-dark font-bold text-xs px-4 py-3 rounded-xl transition">
+                        Export Full CSV
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-biz-card border border-biz-border rounded-2xl overflow-hidden shadow-xl">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-biz-dark text-biz-muted uppercase tracking-wider font-mono border-b border-biz-border">
+                            <tr>
+                                <th class="p-4">Transaction Ref</th>
+                                <th class="p-4">Items Sold</th>
+                                <th class="p-4">Payment Method</th>
+                                <th class="p-4">Time Logged</th>
+                                <th class="p-4 text-right">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody id="fullLedgerTableBody" class="divide-y divide-biz-border"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-biz-card border-t border-biz-border py-8 mt-12 text-xs text-biz-muted">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-lg bg-biz-primary text-biz-dark font-black text-xs flex items-center justify-center">BT</div>
+                <span class="font-bold text-white">BizTrack OS Enterprise</span>
+            </div>
+            <div>&copy; 2026 Eldoret Business Network (EBN). Built for Global SMEs.</div>
+        </div>
+    </footer>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-biz-card border border-biz-border text-white text-xs px-5 py-3 rounded-2xl shadow-2xl z-50 hidden flex items-center gap-3">
+        <i class="fa-solid fa-circle-check text-biz-primary text-base"></i>
+        <span id="toastText">Action completed successfully.</span>
+    </div>
+
+    <!-- MODAL POPUP FOR ADDING STOCK -->
+    <div id="productModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-biz-card border border-biz-border rounded-2xl max-w-md w-full p-6 relative shadow-2xl">
+            <button onclick="closeAddProductModal()" class="absolute top-4 right-4 text-biz-muted hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-lg font-bold text-white mb-4">Add New Inventory Item</h3>
+            <form id="addProductForm" onsubmit="handleAddNewProduct(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="text-biz-muted block mb-1">Item Name</label>
+                    <input type="text" id="newProdName" required placeholder="e.g. Iron Sheets 30G" class="w-full bg-biz-dark border border-biz-border text-white rounded-xl p-3 focus:border-biz-primary focus:outline-none">
+                </div>
+                <div>
+                    <label class="text-biz-muted block mb-1">Category</label>
+                    <input type="text" id="newProdCat" required placeholder="e.g. Hardware / Building" class="w-full bg-biz-dark border border-biz-border text-white rounded-xl p-3 focus:border-biz-primary focus:outline-none">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-biz-muted block mb-1">Unit Price (KSh)</label>
+                        <input type="number" id="newProdPrice" required min="1" placeholder="1200" class="w-full bg-biz-dark border border-biz-border text-white rounded-xl p-3 focus:border-biz-primary focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="text-biz-muted block mb-1">Initial Stock Qty</label>
+                        <input type="number" id="newProdStock" required min="1" placeholder="15" class="w-full bg-biz-dark border border-biz-border text-white rounded-xl p-3 focus:border-biz-primary focus:outline-none">
+                    </div>
+                </div>
+                <button type="submit" class="w-full bg-biz-primary text-biz-dark font-bold py-3.5 rounded-xl transition mt-2">Save Product to Inventory</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT APP LOGIC -->
+    <script>
+        let inventory = [
+            { id: 1, name: 'Cement Bag 50kg', category: 'Hardware', price: 850, stock: 4 },
+            { id: 2, name: 'Iron Sheet 30G', category: 'Hardware', price: 1200, stock: 15 },
+            { id: 3, name: 'Paint Bucket 20L', category: 'Finishes', price: 4500, stock: 2 },
+            { id: 4, name: 'PVC Water Pipe 2-Inch', category: 'Plumbing', price: 650, stock: 32 }
+        ];
+
+        let transactions = [
+            { ref: 'TX-9821', items: '2x Cement Bag 50kg', method: 'M-Pesa STK Push', time: '14:22 PM', amount: 1700 },
+            { ref: 'TX-9820', items: '1x Paint Bucket 20L', method: 'Cash', time: '12:05 PM', amount: 4500 }
+        ];
+
+        let staffList = [
+            { name: 'Kiprono Koech', role: 'Lead Store Attendant', status: 'Clocked In', time: '08:00 AM' },
+            { name: 'Brenda Cheptoo', role: 'Cashier & POS Operator', status: 'Clocked In', time: '08:15 AM' }
+        ];
+
+        let cart = [];
+
+        function switchTab(tabId) {
+            const tabs = ['dashboard', 'pos', 'inventory', 'staff', 'billing', 'reports'];
+            tabs.forEach(t => {
+                document.getElementById('tab-' + t).classList.add('hidden');
+                const btn = document.getElementById('nav-' + t);
+                if(btn) {
+                    btn.classList.remove('bg-biz-primary', 'text-biz-dark');
+                    btn.classList.add('text-biz-muted');
+                }
+            });
+
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            const activeBtn = document.getElementById('nav-' + tabId);
+            if(activeBtn) {
+                activeBtn.classList.remove('text-biz-muted');
+                activeBtn.classList.add('bg-biz-primary', 'text-biz-dark');
+            }
+
+            if(tabId === 'pos') renderPOS();
+            if(tabId === 'inventory') renderInventory();
+            if(tabId === 'staff') renderStaff();
+            if(tabId === 'reports') renderReports();
+            if(tabId === 'dashboard') renderDashboard();
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            document.getElementById('toastText').textContent = msg;
+            t.classList.remove('hidden');
+            setTimeout(() => t.classList.add('hidden'), 3500);
+        }
+
+        function renderDashboard() {
+            let totalRev = transactions.reduce((sum, tx) => sum + tx.amount, 0);
+            document.getElementById('dashTotalRevenue').textContent = 'KSh ' + totalRev.toLocaleString();
+            document.getElementById('dashTotalTx').textContent = transactions.length + ' Orders';
+
+            const listEl = document.getElementById('dashTxList');
+            listEl.innerHTML = transactions.slice(0, 5).map(tx => `
+                <div class="bg-biz-dark p-4 rounded-xl border border-biz-border flex justify-between items-center text-xs">
+                    <div>
+                        <span class="text-white font-bold block">${tx.items}</span>
+                        <span class="text-[10px] text-biz-muted font-mono">${tx.ref} • ${tx.method} • ${tx.time}</span>
+                    </div>
+                    <span class="text-biz-primary font-bold font-mono">+KSh ${tx.amount.toLocaleString()}</span>
+                </div>
+            `).join('');
+        }
+
+        function renderPOS() {
+            const grid = document.getElementById('posProductGrid');
+            grid.innerHTML = inventory.map(item => `
+                <div onclick="addToCart(${item.id})" class="bg-biz-dark border border-biz-border hover:border-biz-primary p-4 rounded-xl cursor-pointer transition group">
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="text-white font-bold text-sm group-hover:text-biz-primary transition">${item.name}</h4>
+                        <span class="text-[10px] text-biz-accent font-mono">${item.category}</span>
+                    </div>
+                    <div class="flex justify-between items-center mt-3 pt-3 border-t border-biz-border/50 text-xs">
+                        <span class="text-biz-muted">Stock: <b class="${item.stock <= 3 ? 'text-yellow-400' : 'text-white'}">${item.stock}</b></span>
+                        <span class="text-biz-primary font-mono font-bold">KSh ${item.price.toLocaleString()}</span>
+                    </div>
+                </div>
+            `).join('');
+            renderCart();
+        }
+
+        function addToCart(id) {
+            const product = inventory.find(i => i.id === id);
+            if(product.stock <= 0) { showToast('Error: Item is out of stock!'); return; }
+            const existing = cart.find(c => c.id === id);
+            if(existing) {
+                if(existing.qty < product.stock) existing.qty++;
+                else showToast('Cannot exceed available stock limit.');
+            } else {
+                cart.push({ id: product.id, name: product.name, price: product.price, qty: 1 });
+            }
+            renderCart();
+        }
+
+        function renderCart() {
+            const list = document.getElementById('cartItemsList');
+            if(cart.length === 0) {
+                list.innerHTML = `<p class="text-xs text-biz-muted italic">Cart is empty. Tap products on the left to add.</p>`;
+                document.getElementById('cartTotalDisplay').textContent = 'KSh 0.00';
+                return;
+            }
+            let total = 0;
+            list.innerHTML = cart.map((c, idx) => {
+                let sub = c.price * c.qty; total += sub;
+                return `
+                    <div class="bg-biz-dark p-3 rounded-xl border border-biz-border flex justify-between items-center text-xs">
+                        <div>
+                            <span class="text-white font-bold block">${c.name}</span>
+                            <span class="text-[10px] text-biz-muted">Qty: ${c.qty} × KSh ${c.price.toLocaleString()}</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-biz-primary font-mono font-bold">KSh ${sub.toLocaleString()}</span>
+                            <button onclick="removeFromCart(${idx})" class="text-red-400 hover:text-red-300"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            document.getElementById('cartTotalDisplay').textContent = 'KSh ' + total.toLocaleString();
+        }
+
+        function removeFromCart(idx) { cart.splice(idx, 1); renderCart(); }
+
+        function completeSale() {
+            if(cart.length === 0) { showToast('Cart is empty!'); return; }
+            let totalAmount = cart.reduce((sum, c) => sum + (c.price * c.qty), 0);
+            let itemSummary = cart.map(c => `${c.qty}x ${c.name}`).join(', ');
+            let payMethod = document.getElementById('posPaymentMethod').value;
+
+            cart.forEach(c => {
+                let prod = inventory.find(i => i.id === c.id);
+                if(prod) prod.stock -= c.qty;
+            });
+
+            transactions.unshift({
+                ref: 'TX-' + Math.floor(1000 + Math.random() * 9000),
+                items: itemSummary, method: payMethod,
+                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                amount: totalAmount
+            });
+
+            showToast(`Sale Successful! Recorded KSh ${totalAmount.toLocaleString()} via ${payMethod}`);
+            cart = []; renderPOS();
+        }
+
+        function renderInventory() {
+            const tbody = document.getElementById('inventoryTableBody');
+            tbody.innerHTML = inventory.map(item => `
+                <tr class="hover:bg-biz-dark/50 transition">
+                    <td class="p-4 font-bold text-white">${item.name}</td>
+                    <td class="p-4 text-biz-muted">${item.category}</td>
+                    <td class="p-4 font-mono text-biz-primary">KSh ${item.price.toLocaleString()}</td>
+                    <td class="p-4 font-mono font-bold ${item.stock <= 3 ? 'text-yellow-400' : 'text-white'}">${item.stock} units</td>
+                    <td class="p-4">${item.stock <= 3 ? '<span class="bg-yellow-400/10 text-yellow-400 text-[10px] px-2 py-0.5 rounded font-mono">Low Stock</span>' : '<span class="bg-biz-primary/10 text-biz-primary text-[10px] px-2 py-0.5 rounded font-mono">In Stock</span>'}</td>
+                    <td class="p-4 text-right space-x-2">
+                        <button onclick="restockItem(${item.id})" class="text-biz-accent hover:underline text-[11px]">Restock +5</button>
+                        <button onclick="deleteItem(${item.id})" class="text-red-400 hover:underline text-[11px]">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function restockItem(id) {
+            let item = inventory.find(i => i.id === id);
+            if(item) { item.stock += 5; showToast(`Restocked 5 units of ${item.name}`); renderInventory(); }
+        }
+
+        function deleteItem(id) {
+            inventory = inventory.filter(i => i.id !== id);
+            showToast('Item removed from inventory.'); renderInventory();
+        }
+
+        function openAddProductModal() { document.getElementById('productModal').classList.remove('hidden'); }
+        function closeAddProductModal() { document.getElementById('productModal').classList.add('hidden'); }
+
+        function handleAddNewProduct(e) {
+            e.preventDefault();
+            let name = document.getElementById('newProdName').value;
+            let cat = document.getElementById('newProdCat').value;
+            let price = parseFloat(document.getElementById('newProdPrice').value);
+            let stock = parseInt(document.getElementById('newProdStock').value);
+            inventory.push({ id: Date.now(), name, category: cat, price, stock });
+            closeAddProductModal();
+            showToast(`Successfully added ${name} to stock.`);
+            renderInventory();
+            document.getElementById('addProductForm').reset();
+        }
+
+        function renderStaff() {
+            const grid = document.getElementById('staffListGrid');
+            grid.innerHTML = staffList.map(s => `
+                <div class="bg-biz-card border border-biz-border p-6 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-white font-bold text-base">${s.name}</h3>
+                            <span class="bg-purple-500/10 text-purple-400 text-[10px] px-2.5 py-1 rounded-full font-mono">${s.status}</span>
+                        </div>
+                        <p class="text-xs text-biz-muted mb-4">${s.role}</p>
+                        <div class="bg-biz-dark p-3 rounded-xl border border-biz-border text-xs flex justify-between items-center font-mono">
+                            <span class="text-biz-muted">Clock-In Time:</span>
+                            <span class="text-white">${s.time}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function simulateClockIn() { showToast('New staff clock-in ping received with selfie & GPS coordinates.'); }
+        
+        function upgradeSubscription(planName) {
+            showToast(`STK Push initiated for ${planName}. Merchant subscription updated!`);
+        }
+
+        function renderReports() {
+            const sym = document.getElementById('ledgerCurrency').value;
+            const tbody = document.getElementById('fullLedgerTableBody');
+            tbody.innerHTML = transactions.map(tx => `
+                <tr class="hover:bg-biz-dark/50 transition">
+                    <td class="p-4 font-mono font-bold text-white">${tx.ref}</td>
+                    <td class="p-4 text-slate-200">${tx.items}</td>
+                    <td class="p-4"><span class="bg-biz-dark border border-biz-border px-2.5 py-1 rounded text-[11px] text-biz-accent">${tx.method}</span></td>
+                    <td class="p-4 text-biz-muted font-mono">${tx.time}</td>
+                    <td class="p-4 text-right font-mono font-bold text-biz-primary">+${sym}${tx.amount.toLocaleString()}</td>
+                </tr>
+            `).join('');
+        }
+
+        function sendWhatsAppReport() {
+            let totalRev = transactions.reduce((sum, tx) => sum + tx.amount, 0);
+            let lowStockItems = inventory.filter(i => i.stock <= 3).map(i => i.name).join(', ') || 'None';
+            
+            let message = `📊 *BIZTRACK DAILY STORE REPORT* 📊\n` +
+                          `🏢 *Store:* Eldo Hardware Ltd (CBD Branch)\n` +
+                          `📅 *Date:* Today\n\n` +
+                          `💰 *Total Revenue:* KSh ${totalRev.toLocaleString()}\n` +
+                          `📦 *Total Orders Logged:* ${transactions.length}\n` +
+                          `⚠️ *Low Stock Alerts:* ${lowStockItems}\n` +
+                          `👥 *Staff Status:* All shifts active\n\n` +
+                          `_Generated securely via BizTrack OS (EBN Work)_`;
+
+            let encodedUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+            window.open(encodedUrl, '_blank');
+            showToast('WhatsApp report generated and opened successfully!');
+        }
+
+        function exportDailyReport() { showToast('Generating End-of-Day Financial Ledger CSV export...'); }
+        function openSettingsModal() { showToast('BizTrack OS v2.0 Enterprise Mode • Multi-Branch active.'); }
+
+        renderDashboard();
+    </script>
+</body>
+</html>
